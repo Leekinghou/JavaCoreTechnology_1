@@ -1,0 +1,143 @@
+# 常量
+
+常量：一种不会改变的变量  
+    - Java没有constant关键字  
+    - 不能修改，final  
+    - 不会修改/只读/只要一份，static  
+    - 方便访问public  
+Java中的常量  
+    - public static final  
+    - 建议变量名字全大写，以连字符相连，如UPPER_BOUND  
+	
+
+## 接口+常量
+接口内定义的变量默认是常量
+```java
+public interface SpecialAnimal {
+    String color = "yellow"; //default:public static final
+    public void move();
+}
+```
+```java
+public class Cat implements SpecialAnimal {
+    public void move(){
+        System.out.println("I can move");
+    }
+
+    public static void main(String[] args){
+        Cat cat = new Cat();
+        //cat.color = "white";
+        //error,the variables in interface are constants
+    }
+}
+```
+
+## 常量池
+- **Java为很多基本类型的包装类/字符串都建立了`常量池 `**
+- 常量池：相同的值只存储一份，节省内存，共享访问
+- 基本类型的包装类
+	- Boolean,Byte,Short,Integer,Long,Character,  **~~Float,Double~~** 
+	- Boolean:true,flase
+	- Byte,Character:\u0000-\u007f(0-127)
+	- Short,Int,Long:-128~127
+	- Float,Double:没有缓冲（常量池）
+查看CacheTest.java代码
+
+```java
+public class IntegerTest {
+    public static void main(String []args){
+        Integer n1 = 127;
+        Integer n2 = 127;
+        System.out.println(n1 == n2);
+
+        Integer n3 = 128;
+        Integer n4 = 128;
+        System.out.println(n3 == n4);
+
+        Integer n5 = new Integer(127);
+        System.out.println(n1 == n5);
+    }
+}
+```
+结果：
+```
+true  
+false  
+false  
+```
+---
+
+```java
+public class CacheTest {
+    public static void main(String []args){
+        String s1 = "abc";
+        String s2 = "abc";
+        String s3 = "ab" + "c";//都是常量，编译器将优化，下同
+        String s4 = "a" + "b" + "c";
+        System.out.println(s1 == s2);
+        System.out.println(s1 == s3);
+        System.out.println(s1 == s4);
+    }
+}
+```
+结果：
+```
+true
+true
+true
+```
+
+# 创建方法
+基本类型的包装类和字符串有两种创建方式
+
+- 常量式（字面量）赋值创建，放在`栈内存`**（将被常量化）**
+```java
+Integer a = 10;
+String b = "abc";
+```
+
+- new 对象进行创建，放在`堆内存`**（不会常量化）**
+```java
+Integer c = new Integer(10);
+String d = new String("abc"); 
+```
+- 这两种创建方式导致创建的对象存放的位置不同
+
+- 查看BoxClassTest.java用以分析Integer类
+	- 基本类型和包装类比较，将对包装类自动拆箱
+	- 对象比较，比较地址
+	- 加法+会自动拆箱
+- 查看StringNewTest.java分析String类
+	- 常量赋值（堆内存）和new创建（栈内存）不是同一个对象
+	- 编译器只会优化确定的字符串，并缓存
+
+## 总结
+- Java中的常量：static和final
+- Java接口中的变量都是常量
+- 对象生成有两种：常量赋值（栈内存）和new创建（堆内存）
+- Java为Boolean，Byte，Character，Short，Int，Long，String的常量赋值建立常量池，没有包括Float和Double
+- Java编译器会优化已经确定的变量
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

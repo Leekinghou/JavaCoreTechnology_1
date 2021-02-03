@@ -1,0 +1,54 @@
+# Java字符串
+
+## String
+- 使用频率高
+- 是一个不可变对象，加减操作性能差
+	- 见StringAppendTest.java
+- 以下方法需要牢记
+charAt,concat,contains,endsWith,equals,
+equalsIgnoreCase, hashCode, indexOf, length, matches, replace,
+replaceAll,split,startsWith,subString,trim,valueOf
+- 查看StringTest.java
+
+```java
+public class StringTest {
+    public static void main(String []args){
+        String a = "123;456;789;123 ";
+        System.out.println(a.charAt(0)); //返回第0个元素
+        System.out.println(a.indexOf(";")); //返回第一个;的位置
+        System.out.println(a.concat(";000")); //连接一个新字符串并返回，a不变
+        System.out.println(a.contains("000")); //判断a是否包含000
+        System.out.println(a.endsWith("000")); //判断a是否以000结尾
+        System.out.println(a.equals("000")); //判断a是否等于000
+        System.out.println(a.equalsIgnoreCase("000"));//判断在忽略大小写的情况下是否等于000
+        System.out.println(a.length()); //返回a的长度
+        System.out.println(a.trim()); //返回a去除前后空格后的字符串，a不变
+        String []b = a.split(";"); //将a字符串按照；分割成数组
+        for(int i = 0;i < b.length;i++){
+            System.out.println(b[i]);
+        }
+    }
+}
+```
+## 可变字符串
+
+### StringBuffer
+- 字符串加减，同步，性能好
+
+### StringBuilder
+- 字符串加减，不同步，性能更好
+
+方法都是一样的，区别在于是否同步
+- append
+- insert
+- delete
+- replace
+- substring
+- length 字符串实际大小，capacity字符串占用空间大小
+- trimToSize():去除空隙，将字符串存储压缩到实际大小
+- 如果有大量append，实现预估大小，再调用相应构造函数
+
+## 总结
+- String（不可变对象，只读）
+- StringBuffer（字符串加减，同步，性能好）
+- StringBuilder （字符串加减，不同步，性能更好）
